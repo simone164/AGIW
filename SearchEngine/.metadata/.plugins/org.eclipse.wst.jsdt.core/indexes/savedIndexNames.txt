@@ -1,0 +1,6 @@
+INDEX VERSION 1.3+/Users/Stefano/Documents/AGIW/SearchEngine/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+1607142331.index
+3917909158.index
+3973353570.index
+730901014.index
+2350809380.index
