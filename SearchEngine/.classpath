@@ -80,5 +80,10 @@
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/slf4j-1.7.11/integration/lib/slf4j-simple-1.5.4-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/slf4j-1.7.11/integration/lib/slf4j-simple-1.6.6.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/slf4j-1.7.11/integration/lib/slf4j-simple-1.6.99.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/jwat-arc-0.8.0.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/jwat-common-0.8.0.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/jwat-distribution-0.8.0.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/jwat-gzip-0.8.0.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/jwat-warc-0.8.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
