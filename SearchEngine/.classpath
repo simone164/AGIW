@@ -85,5 +85,7 @@
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/jwat-distribution-0.8.0.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/jwat-gzip-0.8.0.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/jwat-warc-0.8.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
