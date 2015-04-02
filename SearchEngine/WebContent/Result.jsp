@@ -1,9 +1,11 @@
+<%@page import="org.apache.solr.client.solrj.impl.HttpSolrClient"%>
+<%@page import="org.apache.solr.client.solrj.SolrClient"%>
+<%@page import="org.apache.poi.util.CommonsLogger"%>
 <%@page import="it.cache.downloader.query.Searcher"%>
 <%@ page import="org.apache.solr.*"%>
 <%@ page import="org.apache.solr.common.SolrDocument"%>
 <%@ page import="org.apache.solr.common.SolrDocumentList"%>
 <%@ page import="org.apache.solr.client.solrj.SolrServer"%>
-<%@ page import="org.apache.solr.client.solrj.impl.HttpSolrServer"%>
 <%@ page import="org.apache.solr.client.solrj.response.QueryResponse"%>
 <%@ page import="org.apache.solr.common.params.ModifiableSolrParams"%>
 <%@ page import="org.apache.solr.client.solrj.response.SpellCheckResponse.Suggestion"%>
@@ -15,7 +17,8 @@
 <link rel="stylesheet" type="text/css" href="css/result.css">
 <link href='http://fonts.googleapis.com/css?family=Gochi+Hand'
 	rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Sniglet'rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sniglet'
+	rel='stylesheet' type='text/css'>
 </head>
 <body>
 	<table width="100%" border="0" cellpadding="0" cellspacing="0"
@@ -42,53 +45,59 @@
 		<tr>
 			<td>
 				<%
-		//		SolrServer solrServer = new HttpSolrServer("http://localhost:8983/solr/#/CacheDownloader/");
-		//		ModifiableSolrParams params = new ModifiableSolrParams();
-			
-				String cont = request.getParameter("cont");
-				if (cont == null)
-					cont = "0";
-				Searcher searcher = new Searcher();
-				String word = request.getParameter("query");
-				if (word.equals("")) {
-					out.clear();
-					RequestDispatcher rd = application.getRequestDispatcher("/index.jsp");
-					rd.forward(request, response);
-					return;
-				}
-	/* 			params.set("qt", "/sHandler");
-				params.set("q", word);
-				params.set("rows", "10");
-				params.set("indent", "on");
-				params.set("start", cont);
-				params.set("hl", "on");
-				params.set("hl.fl", "body");
-				params.set("hl.fragsize", "300");
-				solrServer.query(params);
-	 */								
-				QueryResponse rst = searcher.search("/sHandler", word, "10", "on", cont);
-				SolrDocumentList list = rst.getResults();
-				Long size = list.getNumFound();
-				Long maxNumPages = new Long(20);
-				Long max;
-				Long numPages;
-				if ((size / 10) > maxNumPages) {
-					max = maxNumPages;
-					numPages = max;
-				} else {
-					max = size;
-					numPages = max / 10;
-				}
+					String url = new String("http://localhost:8983/solr/admin.html#/CacheDownloader");
+					//HttpSolrServer server = new HttpSolrServer(url);
+					SolrClient client = new HttpSolrClient(url);
+					ModifiableSolrParams params = new ModifiableSolrParams();
 
-				List<Suggestion> suggestions = new LinkedList<Suggestion>(rst
-						.getSpellCheckResponse().getSuggestions());
-				if (suggestions != null && suggestions.size() > 0) {
+					String cont = request.getParameter("cont");
+					System.out.println("######################");
+					System.out.println("CONT: " + cont);
+					if (cont == null)
+						cont = "0";
+					//			Searcher searcher = new Searcher();
+					String word = request.getParameter("query");
+					if (word.equals("")) {
+						out.clear();
+						RequestDispatcher rd = application
+								.getRequestDispatcher("/index.jsp");
+						rd.forward(request, response);
+						return;
+					}
+				/* 	params.set("qt", "/select");
+					params.set("q", word);
+					params.set("rows", "10");
+					params.set("indent", "on");
+					params.set("start", cont);
+					params.set("hl", "on");
+					params.set("hl.fl", "body");
+					params.set("hl.fragsize", "300");
+ */
+					//searcher.search("/sHandler", word, "10", "on", cont);
+
+					QueryResponse rst = client.query(params);
+					SolrDocumentList list = rst.getResults();
+					Long size = list.getNumFound();
+					Long maxNumPages = new Long(20);
+					Long max;
+					Long numPages;
+					if ((size / 10) > maxNumPages) {
+						max = maxNumPages;
+						numPages = max;
+					} else {
+						max = size;
+						numPages = max / 10;
+					}
+
+					List<Suggestion> suggestions = new LinkedList<Suggestion>(rst
+							.getSpellCheckResponse().getSuggestions());
+					if (suggestions != null && suggestions.size() > 0) {
 				%>
 				<div id="suggestion" class="forse_cercavi">
 					<b>Forse cercavi...</b>
 					<%
-					for (Suggestion suggestion : suggestions) {
-				%>
+						for (Suggestion suggestion : suggestions) {
+					%>
 					<a href="Result.jsp?query=<%=suggestion.getAlternatives().get(0)%>">
 						<%=suggestion.getAlternatives().get(0)%>
 					</a>
@@ -100,8 +109,7 @@
 				<div id="numberResults">
 					About
 					<%=size%>
-					results (<%=rst.getElapsedTime()%>
-					milliseconds)
+					results (<%=rst.getElapsedTime()%>milliseconds)
 				</div> <%
  	String id = null;
  	String text = null;
@@ -122,7 +130,7 @@
 				<div id="url" class="link_pagina">
 					<%=id%>
 				</div>
-				<div id="text" class="testo_pagina" style="margin-bottom:10px">
+				<div id="text" class="testo_pagina" style="margin-bottom: 10px">
 					<p><%=body%></p>
 				</div> <%
  	}

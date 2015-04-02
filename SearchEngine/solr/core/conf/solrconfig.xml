@@ -895,6 +895,100 @@
        </arr>
       -->
     </requestHandler>
+    
+<requestHandler name="/sHandler" class="solr.SearchHandler">
+	<lst name="defaults">
+		<str name="echoParams">explicit</str>
+		<!-- VelocityResponseWriter settings -->
+		<str name="wt">json</str>
+		<str name="title">sHandler</str>
+		<!-- Query settings -->
+		<str name="defType">edismax</str>
+		<str name="qf">
+			title^10.0 description^5.0 id^1.0 
+		</str>
+		<str name="q.alt">*:*</str>
+		<str name="rows">10</str>
+		<str name="fl">*,score</str>
+		<str name="mlt.qf">
+			title^10.0 description^5.0 id^1.0
+		</str>
+		<!-- Highlighting defaults -->
+		<str name="hl">on</str>
+		<str name="hl.fl">body</str>
+		<str name="hl.encoder">html</str>
+		<str name="hl.simple.pre">&lt;b&gt;</str>
+		<str name="hl.simple.post">&lt;/b&gt;</str>
+		<str name="f.title.hl.fragsize">0</str>
+		<str name="f.title.hl.alternateField">title</str>
+		<str name="f.name.hl.fragsize">0</str>
+		<str name="f.name.hl.alternateField">name</str>
+		<str name="f.content.hl.snippets">3</str>
+		<str name="f.content.hl.fragsize">200</str>
+		<str name="f.content.hl.alternateField">content</str>
+		<!-- Spell checking defaults -->
+		<str name="spellcheck">on</str>
+		<str name="spellcheck.extendedResults">false</str>
+		<str name="spellcheck.count">5</str>
+		<str name="spellcheck.alternativeTermCount">2</str>
+		<str name="spellcheck.maxResultsForSuggest">5</str>
+		<str name="spellcheck.collate">true</str>
+		<str name="spellcheck.collateExtendedResults">true</str>
+		<str name="spellcheck.maxCollationTries">5</str>
+		<str name="spellcheck.maxCollations">3</str>
+	</lst>
+	<!-- append spellchecking to our list of components -->
+	<arr name="last-components">
+		<str>spellcheck</str>
+	</arr>
+</requestHandler>
+
+<requestHandler name="/imageHandler" class="solr.SearchHandler">
+	<lst name="defaults">
+		<str name="echoParams">explicit</str>
+		<!-- VelocityResponseWriter settings -->
+		<str name="wt">json</str>
+		<str name="title">imageHandler</str>
+		<!-- Query settings -->
+		<str name="defType">edismax</str>
+		<str name="qf">
+			imgAlt^10.0
+		</str>
+		<str name="q.alt">*:*</str>
+		<str name="rows">10</str>
+		<str name="fl">*,score</str>
+		<str name="mlt.qf">
+			imgAlt^10.0
+		</str>
+		<!-- Highlighting defaults -->
+		<str name="hl">on</str>
+		<str name="hl.fl">body</str>
+		<str name="hl.encoder">html</str>
+		<str name="hl.simple.pre">&lt;b&gt;</str>
+		<str name="hl.simple.post">&lt;/b&gt;</str>
+		<str name="f.title.hl.fragsize">0</str>
+		<str name="f.title.hl.alternateField">title</str>
+		<str name="f.name.hl.fragsize">0</str>
+		<str name="f.name.hl.alternateField">name</str>
+		<str name="f.content.hl.snippets">3</str>
+		<str name="f.content.hl.fragsize">200</str>
+		<str name="f.content.hl.alternateField">content</str>
+		<!-- Spell checking defaults -->
+		<str name="spellcheck">on</str>
+		<str name="spellcheck.extendedResults">false</str>
+		<str name="spellcheck.count">5</str>
+		<str name="spellcheck.alternativeTermCount">2</str>
+		<str name="spellcheck.maxResultsForSuggest">5</str>
+		<str name="spellcheck.collate">true</str>
+		<str name="spellcheck.collateExtendedResults">true</str>
+		<str name="spellcheck.maxCollationTries">5</str>
+		<str name="spellcheck.maxCollations">3</str>
+	</lst>
+	<!-- append spellchecking to our list of components -->
+	<arr name="last-components">
+		<str>spellcheck</str>
+	</arr>
+</requestHandler>
 
   <!-- A request handler that returns indented JSON by default -->
   <requestHandler name="/query" class="solr.SearchHandler">
@@ -1285,9 +1379,9 @@
 
         http://wiki.apache.org/solr/SpellCheckComponent
      -->
-  <searchComponent name="spellcheck" class="solr.SpellCheckComponent">
+<searchComponent name="spellcheck" class="solr.SpellCheckComponent">
 
-    <str name="queryAnalyzerFieldType">text_general</str>
+    <str name="queryAnalyzerFieldType">textSpell</str>
 
     <!-- Multiple "Spell Checkers" can be declared and used by this
          component
@@ -1296,7 +1390,7 @@
     <!-- a spellchecker built from a field of the main index -->
     <lst name="spellchecker">
       <str name="name">default</str>
-      <str name="field">text</str>
+      <str name="field">title</str>
       <str name="classname">solr.DirectSolrSpellChecker</str>
       <!-- the spellcheck distance measure used, the default is the internal levenshtein -->
       <str name="distanceMeasure">internal</str>

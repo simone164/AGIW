@@ -59,7 +59,7 @@ public class SqlTikaExample {
     try {
       SqlTikaExample idxer = new SqlTikaExample("http://localhost:8983/solr/CacheDownloader");
       
-      idxer.doTikaDocuments(new File("/Users/Stefano/Documents/DatiParsati"));
+      idxer.doTikaDocuments(new File("C:/Users/Think/Desktop/hanzo-warc-tools/http"));
       idxer.doSqlDocuments();
       idxer.endIndexing();
       
@@ -216,7 +216,7 @@ public class SqlTikaExample {
       doc.addField("title", metadata.get("title"));
       doc.addField("content", body);
       if(link != null){
-      doc.addField("url", link.attr("abs:href"));
+      doc.addField("url", link.attr("href"));
       }
       // Crude way to get known meta-data fields.
       // Also possible to write a simple loop to examine all the

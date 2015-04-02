@@ -17,7 +17,7 @@
 		</tr>
 		<tr>
 			<td width="50%" align="center" colspan="2">
-				<form id="form_ricerca" name="form_ricerca" action="Result.jsp"
+				<form id="form_ricerca" name="form_ricerca" action="./Result.jsp"
 					method="get" style="margin-top: 45px">
 					<input name="query" class="input_ricerca" value="Cerca..."
 						onclick="if(this.value == 'Cerca...'){ this.value = '' }"></input>

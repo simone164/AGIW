@@ -1,7 +1,9 @@
 package it.cache.downloader.query;
 
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.params.ModifiableSolrParams;
 
@@ -27,4 +29,14 @@ public class Searcher {
 		}
 		return response;
 	}	
+	
+	public QueryResponse test(String str) throws SolrServerException{
+		HttpSolrServer client = new HttpSolrServer("http://localhost:8983/solr/CacheDownloader");
+		SolrQuery query = new SolrQuery();
+		query.setQuery(str);
+		query.setFields("id", "content", "title", "url");
+		query.setStart(0);
+		QueryResponse response = client.query(query);
+		return response;
+	}
 }

@@ -11,7 +11,7 @@ public class SolrServerFactory {
 	
 	private SolrServerFactory() {
 		try{
-		solrServer = new HttpSolrServer("http://localhost:8983/solr/#/CacheDownloader/");
+		solrServer = new HttpSolrServer("http://localhost:8983/solr/CacheDownloader/");
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
